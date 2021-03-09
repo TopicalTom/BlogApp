@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Context
-import { BlogProvider } from './src/context/BlogProvider';
+import { Provider as BlogProvider } from './src/context/BlogContext';
 
 // Screens
 import IndexScreen from './src/screens/IndexScreen';
