@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const HomeScreen = () => {
+const CreateScreen = () => {
 
     return (
         <View>
-            <Text>Home</Text>
+            <Text>Create</Text>
         </View>
     );
 };
 
 const styles = StyleSheet.create({});
 
-export default HomeScreen;
+export default CreateScreen;
