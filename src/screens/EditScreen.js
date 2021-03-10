@@ -1,12 +1,32 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const EditScreen = () => {
+// Context
+import { Context as BlogContext } from '../context/BlogContext';
+
+// Components
+import BlogPostForm from '../components/BlogPostForm';
+
+const EditScreen = ({ route }) => {
+    const { id } = route.params;
+    const { state, editBlogPost } = useContext(BlogContext);
+    const navigation = useNavigation();
+
+    const blogPost = state.find(
+        blogPost => blogPost.id === id
+    );
 
     return (
-        <View>
-            <Text>Edit</Text>
-        </View>
+        <BlogPostForm 
+            initialValues={{ 
+                title: blogPost.title, 
+                content: blogPost.content
+            }}
+            onSubmit={(title, content) => {
+                editBlogPost(id, title, content, () => navigation.goBack())
+            }}
+        />
     );
 };
 

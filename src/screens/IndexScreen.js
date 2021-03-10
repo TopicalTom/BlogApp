@@ -1,36 +1,38 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity, Touchable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 // Context
 import { Context as BlogContext } from '../context/BlogContext';
 
 const IndexScreen = () => {
-    const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
+    const { state, deleteBlogPost } = useContext(BlogContext);
+    const navigation = useNavigation();
 
     return (
         <View style={styles.screen}>
-            <Button 
-                title="Add Post" 
-                onPress={addBlogPost}/>
             <FlatList 
                 data={state}
                 keyExtractor={blogPost => blogPost.title}
                 renderItem={({ item }) => {
                     return (
-                        <View style={styles.row}>
-                            <Text 
-                                style={styles.title}>
-                                {item.title} - {item.id}
-                            </Text>
-                            <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
-                                <Icon 
-                                    name="trash-2"
-                                    type='feather' 
-                                    style={styles.icon}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity 
+                            onPress={() => navigation.navigate('Show', { id: item.id })}>
+                            <View style={styles.row}>
+                                <Text 
+                                    style={styles.title}>
+                                    {item.title}
+                                </Text>
+                                <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                                    <Icon 
+                                        name='trash-2'
+                                        type='feather' 
+                                        style={styles.icon}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
                     )
                 }}
             />
