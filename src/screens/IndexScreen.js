@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
@@ -7,8 +7,19 @@ import { useNavigation } from '@react-navigation/native';
 import { Context as BlogContext } from '../context/BlogContext';
 
 const IndexScreen = () => {
-    const { state, deleteBlogPost } = useContext(BlogContext);
+    const { state, deleteBlogPost, getBlogPosts } = useContext(BlogContext);
     const navigation = useNavigation();
+
+    // Grabs Blog Posts on Load + Adds Change Listener
+    useEffect(() => {
+        getBlogPosts();
+
+        const unsubscribe = navigation.addListener('focus', () => {
+            getBlogPosts();
+        });
+
+        return () => unsubscribe;
+    }, []);
 
     return (
         <View style={styles.screen}>
